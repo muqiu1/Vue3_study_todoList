@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="todo-container">
+        <div class="todo-warp">
+            <myHeader />
+            <myList />
+            <myFooter />
+        </div>
+    </div>
 </template>
+<script lang="ts">
+import { defineComponent } from "vue";
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
+import myFooter from "./components/Footer.vue";
+import myList from "./components/List.vue";
+import myHeader from "./components/Header.vue";
+export default defineComponent({
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    myHeader,
+    myList,
+    myFooter,
+  },
+});
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .todo-container {
+    width: 600px;
+    margin: 0 auto;
+  }
+
+  .todo-container .todo-warp {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
 </style>
