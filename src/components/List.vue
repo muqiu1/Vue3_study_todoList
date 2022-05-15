@@ -1,6 +1,6 @@
 <template>
   <ul class="todo-main">
-      <myItem />
+    <myItem v-for="(todo) in todos" :key="todo.id"  :todo="todo"/>
   </ul>
 </template>
 <script lang="ts">
@@ -12,6 +12,7 @@ export default defineComponent({
   components: {
     myItem,
   },
+  props: ['todos'],
 });
 </script>
 <style>
