@@ -1,19 +1,61 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isCheckAll" />
     </label>
-    <span><span>已完成0</span> / 全部2</span>
-    <button class="btn btn-danger">清空</button>
+    <span>
+      <span>已完成{{ count }}</span> / 全部{{ todos.length }}
+    </span>
+    <button class="btn btn-danger" @click="clearAllCompletedTodos">
+      清除已完成任务
+    </button>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from 'vue'
+import { Todo } from '../types/todo'
 export default defineComponent({
-  name: "myFooter",
-});
+  name: 'myFooter',
+  props: {
+    todos: {
+      type: Array as () => Todo[],
+      required: true,
+    },
+    checkAll: {
+      type: Function,
+      required: true,
+    },
+    clearAllCompletedTodos: {
+      type: Function,
+      required: true,
+    },
+  },
+  setup(props) {
+    // 已完成的计算属性操作
+    const count = computed(() => {
+      return props.todos.reduce(
+        (pre, todo) => pre + (todo.isChecked ? 1 : 0),
+        0
+      )
+    })
+    // 全选/全不选的计算属性操作
+    const isCheckAll = computed({
+      get() {
+        return count.value > 0 && props.todos.length === count.value
+      },
+      set(val) {
+        props.checkAll(val)
+      },
+    })
+    return {
+      count,
+      isCheckAll,
+    }
+  },
+})
 </script>
-<style>
+<style scoped>
+/*footer*/
 .todo-footer {
   height: 40px;
   line-height: 40px;

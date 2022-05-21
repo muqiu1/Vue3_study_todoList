@@ -2,43 +2,65 @@
   <div class="todo-header">
     <input
       type="text"
-      placeholder="请输入你的任务名称"
+      placeholder="请输入你的任务名称，按回车键确认"
       v-model="title"
       @keyup.enter="add"
     />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
-  name: "myHeader",
+  name: 'myHeader',
   props: {
     addTodo: {
       type: Function,
-      required: true,
+      required: true, // 必须
     },
   },
-  setup(props) {
-    const title = ref("");
 
+  setup(props) {
+    // 定义一个ref类型的数据
+    const title = ref('')
+
+    // 回车的事件的回调函数,用来添加数据
     const add = () => {
-      const text = title.value;
-      if (!text.trim()) return;
+      // 获取文本框中输入的数据,判断不为空
+      const text = title.value
+      if (!text.trim()) return
+      // 此时有数据,创建一个todo对象
       const todo = {
         id: Date.now(),
         title: text,
-        isChecked: false,
-      };
-
-      props.addTodo(todo);
-
-      title.value = "";
-    };
-
+        isCompleted: false,
+      }
+      // 调用方法addTodo的方法
+      props.addTodo(todo)
+      // 清空文本框
+      title.value = ''
+    }
     return {
       title,
       add,
-    };
+    }
   },
-});
+})
 </script>
+<style scoped>
+/*header*/
+.todo-header input {
+  width: 560px;
+  height: 28px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 7px;
+}
+
+.todo-header input:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(82, 168, 236, 0.6);
+}
+</style>

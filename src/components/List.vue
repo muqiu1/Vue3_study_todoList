@@ -1,21 +1,29 @@
 <template>
   <ul class="todo-main">
-    <myItem v-for="(todo) in todos" :key="todo.id"  :todo="todo"/>
+    <myItem
+      v-for="(todo, index) in todos"
+      :key="todo.id"
+      :todo="todo"
+      :deleteTodo="deleteTodo"
+      :updateTodo="updateTodo"
+      :index="index"
+    />
   </ul>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
-
-import myItem from "./Item.vue";
+import { defineComponent } from 'vue'
+// 引入子级组件
+import myItem from './Item.vue'
 export default defineComponent({
-  name: "myList",
+  name: 'myList',
   components: {
     myItem,
   },
-  props: ['todos'],
-});
+  props: ['todos', 'deleteTodo', 'updateTodo'],
+})
 </script>
-<style>
+<style scoped>
+/*main*/
 .todo-main {
   margin-left: 0px;
   border: 1px solid #ddd;
